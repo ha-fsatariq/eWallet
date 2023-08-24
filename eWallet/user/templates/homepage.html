@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}HomePage Page{% endblock %}
+{% block navbar %}
+{% with Href=logout log='logout' %}
+{% include 'Components/navbar.html' %}
+{% endwith %}
+{% endblock %}
+{% block content %}
+
+<h1>heelllo</h1>
+{% if info %}
+                 
+{{info}} 
+    {% endif %} 
+{% endblock %}

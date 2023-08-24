@@ -1,24 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}Register Page{% endblock %}
-
+{% block navbar %}
+{% with Href='#' log='' %}
+{% include 'Components/navbar.html' %}
+{% endwith %}
+{% endblock %}
 {% block content %}
 
   <div class="container mt-5">
     
     <div class="row justify-content-center">
-      {% comment %} {% if messages %}
-                 
-      {% for message in messages %}
-          {% if message.tags == message.success %}
-              <div class="alert alert-success">
-          {% elif error_message %}
-              <div class="alert alert-danger">
-          {% endif %}
-          <li>{{ error_message }}</li>
-                </div>
-            {% endfor %}
-    {% endif %} {% endcomment %}
+    
         <div class="col-md-6">
           
             <div class="card">
@@ -43,7 +36,7 @@
                         </div>
                         <div class="form-group">
                           <label for="password">Enter Password</label>
-                          <input type="text" class="form-control" id="password" name="password"  required>
+                          <input type="password" class="form-control" id="password" name="password"  required>
                         </div>
                         <div class="form-group">
                             <label for="cnic">CNIC</label>
