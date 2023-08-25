@@ -1,0 +1,64 @@
+body {
+    background-image: url('../../static/images/bg1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: cream;
+}
+.user-card {
+    background-color: rgba(255, 255, 255, 0.8); /* Add transparency to the background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    backdrop-filter: blur(10px); /* Add backdrop filter for the blur effect */
+    margin-bottom: 20px;
+    min-height: 230px;
+   
+}
+
+.profile-image {
+    min-width: 200px;
+    min-height: 200px;
+    padding-right: 30px;
+    object-fit: cover;
+}
+
+.user-info h2,
+.user-info h3,
+.user-info h4 {
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-top: 0;
+    color: #333; /* Adjust the text color */
+}
+
+
+.btn-action {
+    padding-left: 10px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.blurred-card {
+   
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.2); /* Add a bit of white color with transparency */
+    color: #fff;
+    text-align: center;
+    
+}
+
+.blurred-card .card-body {
+    padding: 1.25rem;
+   
+}
+
+.blurred-card .card-title,
+.blurred-card .card-text {
+    color: #fff;
+}
+
+.blurred-card .btn {
+    margin-top: 10px;
+}

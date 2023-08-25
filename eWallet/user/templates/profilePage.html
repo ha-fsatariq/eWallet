@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile Page{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block jshref %} src="{% static 'js/profilePage.js' %}" {% endblock %}
+{% block navbar %}
+{% url 'logout' as custom_logout_url %}
+{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in%}
+{% include 'Components/navbar.html' %}
+{% endwith %}
+{% endblock %}
+
+
+
+
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>User Profile</h3>
+                </div>
+                <div class="card-body">
+                    <form id="profileForm" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <img src="{{ user.profileImage.url }}" alt="Profile Image" class="img-fluid mb-2">
+                            <div class="mb-3">
+                                <label for="profile" id='profileTag' style="display: none;">Upload Profile Picture</label>
+                                <input type="file" class="form-control-file" id="profileImage" name="profile" style="display: none;" >
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" readonly required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="contact" class="form-label">Contact</label>
+                            <input type="text" class="form-control" id="contact" name="contact" value="{{ user.contact }}" readonly required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" readonly required>{{ user.address }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cnic" class="form-label">CNIC</label>
+                            <input type="text" class="form-control" id="cnic" name="cnic" value="{{ user.cnic }}" readonly required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" readonly required>
+                        </div>
+                        <button type="button" id="editButton" class="btn btn-primary">Edit</button>
+                        <button type="submit" id="updateButton" class="btn btn-success" style="display: none;">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+  

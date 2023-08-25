@@ -1,1 +1,4 @@
+eWallet/eWallet/__pycache__
+.env
+venv/
 db.sqlite3
