@@ -1,16 +1,64 @@
-{% extends "base.html" %}
 
+{% extends "base.html" %}
+{% load static %}
 {% block title %}HomePage Page{% endblock %}
+{% block csshref %} href="{% static 'css/homepage.css' %}" {% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block jshref %} src="{% static 'js/homepage.js' %}" {% endblock %}
 {% block navbar %}
-{% with Href=logout log='logout' %}
+{% url 'logout' as custom_logout_url %}
+{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in%}
 {% include 'Components/navbar.html' %}
 {% endwith %}
 {% endblock %}
 {% block content %}
 
-<h1>heelllo</h1>
-{% if info %}
-                 
-{{info}} 
-    {% endif %} 
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="user-card p-4">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="{{ user.profileImage.url }}" alt="profileImage" class="img-fluid profile-image">
+                        
+                    </div>
+                    <div class="col-md-8 user-info">
+                        <h2 class="mb-3">{{ user.username }}</h2>
+                        <h4>CNIC: {{ user.cnic }}</h4>
+                        <h4 id="amount" class="mb-0">Amount: {{ user.amount }} Rs</h4>
+                
+                        <a class="btn btn-success btn-action">Hide Balance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                
+
+                {% with Heading='Transfer Funds' discription='Send the funds to your loved ones!Seamlessly Move Your Money: Transfer Funds with Confidence' button='Transfer Now' %}
+                {% include 'Components/cards.html' %}
+                {% endwith %}
+
+                {% with Heading='Add Payee' discription='To send money without having the hastle to add information, add payee now.Hastel free banking!' button='Add Now' %}
+                {% include 'Components/cards.html' %}
+                {% endwith %}
+
+                {% with Heading='Amount Statement' discription='Keep track of your account history and transaction details by accessing your account statement.' button='See Statement' %}
+                {% include 'Components/cards.html' %}
+                {% endwith %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+   
 {% endblock %}

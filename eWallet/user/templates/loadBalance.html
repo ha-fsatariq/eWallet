@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}load Balance Page{% endblock %}
+{% comment %} {% block csshref %} href="{% static 'css/homepage.css' %}" {% endblock %} {% endcomment %}
+{% block navbar %}
+{% url 'logout' as custom_logout_url %}
+{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in %}
+{% include 'Components/navbar.html' %}
+{% endwith %}
+{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+          
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Load Amount</h4>
+                </div>
+                <div class="card-body">
+                   
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">User Name:</label>
+                            <input type="text" class="form-control" id="username" name="username"  required>
+                          </div>
+                          <div class="form-group">
+                            <label for="amount">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount"  required>
+                          </div>
+                      
+                
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        {% if information %}
+                        <p>{{information}}</p>
+                        {% endif %}
+                      </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock %}
