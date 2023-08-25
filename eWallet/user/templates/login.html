@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+          
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Login Here</h4>
+                </div>
+                <div class="card-body">
+                   
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="firstName">User Name:</label>
+                            <input type="text" class="form-control" id="username" name="username"  required>
+                          </div>
+                        
+                        <div class="form-group">
+                          <label for="password">Enter Password</label>
+                          <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                      
+                
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                    {% if info %}
+                    {{info}}
+                    {{attempts}}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% comment %} {% with lockout_state=cache.get|default_if_none:'lockout_'|add:user.username %}
+    {% if lockout_state %}
+        <p class="text-danger">You are temporarily locked out due to multiple failed login attempts. Please try again later.</p>
+    {% endif %}
+{% endwith %} {% endcomment %}
+{% endblock %}
