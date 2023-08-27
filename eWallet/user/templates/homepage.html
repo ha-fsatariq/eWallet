@@ -37,15 +37,15 @@
             <div class="row justify-content-center">
                 
 
-                {% with Heading='Transfer Funds' discription='Send the funds to your loved ones!Seamlessly Move Your Money: Transfer Funds with Confidence' button='Transfer Now' %}
+                {% with Heading='Transfer Funds' discription='Send the funds to your loved ones!Seamlessly Move Your Money: Transfer Funds with Confidence' button='Transfer Now' link='transferFund' %}
                 {% include 'Components/cards.html' %}
                 {% endwith %}
 
-                {% with Heading='Add Payee' discription='To send money without having the hastle to add information, add payee now.Hastel free banking!' button='Add Now' %}
+                {% with Heading='Add Payee' discription='To send money without having the hastle to add information, add payee now.Hastel free banking!' button='Add Now' link='accountStatement' %}
                 {% include 'Components/cards.html' %}
                 {% endwith %}
 
-                {% with Heading='Amount Statement' discription='Keep track of your account history and transaction details by accessing your account statement.' button='See Statement' %}
+                {% with Heading='Amount Statement' discription='Keep track of your account history and transaction details by accessing your account statement.' button='See Statement' link='accountStatement' %}
                 {% include 'Components/cards.html' %}
                 {% endwith %}
 
@@ -55,10 +55,4 @@
 </div>
 
 
-
-
-
-
-
-   
 {% endblock %}

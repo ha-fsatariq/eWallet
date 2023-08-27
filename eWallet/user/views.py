@@ -12,7 +12,8 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.contrib.auth import get_user
+from django.db.models import Q
+from Transactions.models import Transaction
 
 
 # Create your views here.
@@ -33,7 +34,7 @@ class RegistrationView(View):
         address = str(request.POST.get('address'))
         username =str(firstname)+' '+str(lastname)
 
-        if not User.objects.filter(username=username).exists():
+        if not User.objects.filter(Q(username=username) | Q(contact=contact)).exists():
             user=User.objects.create(username=username, email=email, password=password,cnic=cnic,contact=contact,profileImage=profileImg, address=address,is_active=False)
             # messages.success(request, 'Registration successful! Please confirm your email.')
             token = default_token_generator.make_token(user)
@@ -54,7 +55,7 @@ class RegistrationView(View):
             return redirect('login') 
    
         else:
-            return render(request, self.template_name, {'error_message': 'Username already exists'})
+            return render(request, self.template_name, {'error_message': 'Username or Contact is already registered'})
 
 
 class Login(LoginView):
@@ -134,6 +135,22 @@ class StatementHistory(View):
         user=request.user
         return render(request, 'StatementHistory.html', {'user': user, 'Signed_in': True})
     
+    def post(self,request):
+        contact=request.POST.get('contact')
+        
+        if User.objects.filter(contact=contact).exists():
+            user=User.objects.get(contact=contact)
+            transfers=Transaction.objects.filter(user=user)
+            heading='Transaction History of '+transfers.first().user.username
+            return render(request,'accountStatements.html',{'user':request.user,'Signed_in':True,'transfers':transfers,'heading':heading})
+        else:
+            print('user doesnot exsists')
+            print(contact)
+            error='User with mentioned information doesnot exist.'
+            return redirect('StatementHistory')
+            
+    
+    
 class loadBalance(View):
     def get(self,request):
         user =request.user
@@ -144,7 +161,7 @@ class loadBalance(View):
         amount=request.POST.get('amount')
         userEdited=User.objects.filter(username=username).first()
         if userEdited is not None:
-            userEdited.amount=amount
+            userEdited.amount=str(float(amount)+float(userEdited.amount))
             userEdited.save()
             information='The amount of the mentioned user is updated successfully'
         else:

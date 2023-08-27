@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Account Statement Page{% endblock %}
+{% comment %} {% block csshref %} href="{% static 'css/homepage.css' %}" {% endblock %} {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% comment %} {% block jshref %} src="{% static 'js/homepage.js' %}" {% endblock %} {% endcomment %}
+{% block navbar %}
+{% url 'logout' as custom_logout_url %}
+{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in%}
+{% include 'Components/navbar.html' %}
+{% endwith %}
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    {% if heading %}
+    <h3>{{heading}}</h3>
+    {% else %}
+    <h2>Account Statement</h2>
+    {% endif %}
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Purpose</th>
+                <th>Reciever/Sender</th>
+                <th>Time Stamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transfer in transfers %}
+                <tr class="{% if transfer.transaction_type == 'credit' %}table-success{% elif transfer.transaction_type == 'debit' %}table-danger{% endif %}">
+                    
+                    <td>{{ transfer.amount }}</td>
+                    <td>{{ transfer.purpose }}</td>
+                    <td>{{ transfer.otheruser }}</td>
+                    <td>{{ transfer.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

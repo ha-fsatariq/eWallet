@@ -1,4 +1,8 @@
-eWallet/eWallet/__pycache__
+**/__pycache__/
+eWallet\eWallet\__pycache__
+eWallet\eWallet\user\__pycache__
+eWallet\eWallet\__pycache__
 .env
 venv/
-db.sqlite3
+eWallet\db.sqlite3
+*.pyc

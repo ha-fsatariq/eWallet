@@ -10,6 +10,30 @@
 {% endblock %}
 {% block content %}
 
-Statement History
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Check Statment History</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Enter Contact number:</label>
+                            <input type="text" class="form-control" id="contact" name="contact"  required>
+                          </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                       
+                      </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+
   
 {% endblock %}
