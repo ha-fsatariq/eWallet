@@ -34,7 +34,7 @@ class RegistrationView(View):
         address = str(request.POST.get('address'))
         username =str(firstname)+' '+str(lastname)
 
-        if not User.objects.filter(Q(username=username) | Q(contact=contact)).exists():
+        if not User.objects.filter(Q(username=username) | Q(contact=contact) | Q(email=email)).exists():
             user=User.objects.create(username=username, email=email, password=password,cnic=cnic,contact=contact,profileImage=profileImg, address=address,is_active=False)
             # messages.success(request, 'Registration successful! Please confirm your email.')
             token = default_token_generator.make_token(user)
@@ -55,7 +55,7 @@ class RegistrationView(View):
             return redirect('login') 
    
         else:
-            return render(request, self.template_name, {'error_message': 'Username or Contact is already registered'})
+            return render(request, self.template_name, {'error_message': 'Username , Contact or email is already registered'})
 
 
 class Login(LoginView):
@@ -118,7 +118,7 @@ class Login(LoginView):
 class homepage(View):
     def get(self, request):
         user = request.user
-        return render(request, 'homepage.html',{'user':user, 'Signed_in':True})
+        return render(request, 'homepage.html',{'Signed_in':True})
     
 class ConfirmEmailView(View):
     def get(self, request, token, **kwargs):
@@ -133,19 +133,18 @@ class ConfirmEmailView(View):
 class StatementHistory(View):
     def get(self,request):
         user=request.user
-        return render(request, 'StatementHistory.html', {'user': user, 'Signed_in': True})
+        return render(request, 'StatementHistory.html', {'Signed_in': True})
     
     def post(self,request):
         contact=request.POST.get('contact')
-        
-        if User.objects.filter(contact=contact).exists():
-            user=User.objects.get(contact=contact)
+        email=request.POST.get('email')
+        if User.objects.filter(Q(contact=contact)|Q(email=email)).exists():
+            user=User.objects.get(Q(contact=contact)|Q(email=email))
             transfers=Transaction.objects.filter(user=user)
             heading='Transaction History of '+transfers.first().user.username
-            return render(request,'accountStatements.html',{'user':request.user,'Signed_in':True,'transfers':transfers,'heading':heading})
+            return render(request,'accountStatements.html',{'Signed_in':True,'transfers':transfers,'heading':heading})
         else:
             print('user doesnot exsists')
-            print(contact)
             error='User with mentioned information doesnot exist.'
             return redirect('StatementHistory')
             
@@ -154,7 +153,7 @@ class StatementHistory(View):
 class loadBalance(View):
     def get(self,request):
         user =request.user
-        return render(request,'loadBalance.html', {'user': user, 'Signed_in': True})
+        return render(request,'loadBalance.html', { 'Signed_in': True})
     
     def post(self,request):
         username=request.POST.get('username')
@@ -166,7 +165,7 @@ class loadBalance(View):
             information='The amount of the mentioned user is updated successfully'
         else:
             information='Please enter a valid user.'
-        return render(request,'loadBalance.html',{'information':information,'user': request.user, 'Signed_in': True})
+        return render(request,'loadBalance.html',{'information':information, 'Signed_in': True})
     
 class Logout(View):
     def get(self, request):
@@ -177,7 +176,7 @@ class profile(View):
     def get(self,request):
         user=request.user
         print(user.contact)
-        return render(request,'profilePage.html',{'user':user, 'Signed_in':True})
+        return render(request,'profilePage.html',{ 'Signed_in':True})
     
     def post(self,request):
     

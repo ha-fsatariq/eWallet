@@ -4,7 +4,7 @@
 {% comment %} {% block csshref %} href="{% static 'css/homepage.css' %}" {% endblock %} {% endcomment %}
 {% block navbar %}
 {% url 'logout' as custom_logout_url %}
-{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in %}
+{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in %}
 {% include 'Components/navbar.html' %}
 {% endwith %}
 {% endblock %}

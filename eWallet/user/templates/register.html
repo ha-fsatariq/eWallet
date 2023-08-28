@@ -14,8 +14,13 @@
     
         <div class="col-md-6">
           {% if error_message %}
-          {{error_message}}
-          {% endif %}
+            <div class="alert alert-danger">
+                {{ error_message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
             <div class="card">
                 <div class="card-header">
                     <h4 class="text-center">Register Here</h4>

@@ -2,12 +2,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Funds Transfer Page{% endblock %}
-{% comment %} {% block csshref %} href="{% static 'css/homepage.css' %}" {% endblock %} {% endcomment %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{% comment %} {% block jshref %} src="{% static 'js/homepage.js' %}" {% endblock %} {% endcomment %}
 {% block navbar %}
 {% url 'logout' as custom_logout_url %}
-{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in%}
+{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in%}
 {% include 'Components/navbar.html' %}
 {% endwith %}
 {% endblock %}
@@ -38,9 +35,13 @@
                 <div class="card-body">
                     <form method="post" >
                         {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                             <input type="email" class="form-control" id="email" name='email' {% if recieved_email %} value="{{ recieved_email }}" readonly {% endif %}>
+                          </div>
                         <div class="mb-3">
                             <label for="contact" class="form-label">Contact</label>
-                            <input type="text" class="form-control" id="contact" name="contact" required>
+                            <input type="text" class="form-control" id="contact" name="contact" {% if received_contact %} value="{{ received_contact }}" readonly {% endif %} >
                         </div>
                         <div class="mb-3">
                             <label for="amount" class="form-label">Amount</label>
