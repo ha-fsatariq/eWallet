@@ -4,5 +4,5 @@ eWallet\eWallet\user\__pycache__
 eWallet\eWallet\__pycache__
 .env
 venv/
-eWallet\db.sqlite3
+db.sqlite3
 *.pyc
