@@ -3,10 +3,10 @@
 {% block title %}Profile Page{% endblock %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{% block jshref %} src="{% static 'js/profilePage.js' %}" {% endblock %}
+{% block jshref %} src="{% static '/js/profilePage.js' %}" {% endblock %}
 {% block navbar %}
 {% url 'logout' as custom_logout_url %}
-{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in%}
+{% with Href=custom_logout_url log='logout' user=request.user %}
 {% include 'Components/navbar.html' %}
 {% endwith %}
 {% endblock %}

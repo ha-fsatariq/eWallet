@@ -1,19 +1,23 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views import View
 from user.models import User
 from Transactions.models import Transaction
 from datetime import datetime
 from django.db.models import Q
+from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@method_decorator(login_required, name='dispatch')
 class fundsTransfer(View):
     def get(self,request, **kwargs):
         contact =request.GET.get('contact')
         email = request.GET.get('email')
         if contact and email:
-            return render(request,'transferFunds.html',{'Signed_in':True,'received_contact':contact,'recieved_email':email})
+            return render(request,'transferFunds.html',{'received_contact':contact,'recieved_email':email})
         else:
-            return render(request,'transferFunds.html',{'Signed_in':True})
+            return render(request,'transferFunds.html')
 
     def post(self,request):
         contact_recieved = request.POST.get('contact')
@@ -49,24 +53,24 @@ class fundsTransfer(View):
                 transaction_reciever.amount=str(float(transaction_reciever.amount)+amount)
                 transaction_reciever.save()
                 disclaimer='The amount has been transferred successfully!'
-                dis_type=True
+                messages.success(request,disclaimer)
                 
             else:
                 disclaimer='Your credit is insufficent to make the transfer.'
-                dis_type=False
+                messages.error(request,disclaimer)
         else:
             disclaimer='The user with the mentioned contact/email doesnot exist.'
-            dis_type=False
+            messages.error(request,disclaimer)
         
-        return render(request,'transferFunds.html',{'Signed_in':True,'disclaimer':disclaimer ,'dis_type':dis_type })
+        return render(request,'transferFunds.html')
 
 
 
-
+@method_decorator(login_required, name='dispatch')
 class accountStatement(View):
     def get(self,request):
         transfers=Transaction.objects.filter(user=request.user)
-        return render(request,'accountStatements.html',{'Signed_in':True,'transfers':transfers})
+        return render(request,'accountStatements.html',{'transfers':transfers})
     
     
 

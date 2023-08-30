@@ -2,30 +2,35 @@ from django.shortcuts import render
 from user.models import User
 from django.views import View
 from django.db.models import Q
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from Friends.models import Friend
+from django.contrib import messages
 # Create your views here.
+@method_decorator(login_required, name='dispatch')
 class Pals(View):
     def get(self,request):
         friends=Friend.objects.filter(user=request.user)
         #user objects of friends
         user_query= Q()
+        users = []
         if Friend.objects.filter(user=request.user).exists():
             for friend in friends:
-                user_query |= Q(email=friend.email) | Q(contact=friend.contact)
-
-            userObjects = User.objects.filter(user_query)
-            userObjects=userObjects[::-1]
+                user_query = Q(email=friend.email) | Q(contact=friend.contact)
+                current_user=User.objects.get(user_query)
+                users.append(current_user)
+            
         else:
-            userObjects={}
-        combined_data = zip(friends, userObjects)
-        print(friends)
-        print(userObjects)
-        print(combined_data)
-        return render(request,'seePals.html',{'combined_data':combined_data,'Signed_in':True})
+            users=[]
+        combined_data = zip(friends, users)
+        
+       
+        return render(request,'seePals.html',{'combined_data':combined_data})
     
+@method_decorator(login_required, name='dispatch')
 class AddPals(View):
     def get(self,request):
-        return render(request,'palsPage.html',{'Signed_in':True})
+        return render(request,'palsPage.html')
     
     def post(self,request):
         nickname=request.POST.get('nickname') 
@@ -40,11 +45,11 @@ class AddPals(View):
                 Friend.objects.create(user=request.user,email=email,nickname=nickname)
 
             msg='The pal with the specified credentials have been added as a payee.'
-            success=True
+            messages.success(request,msg)
         else:
             msg='Please provide the correct and complete detail.'
-            success=False
+            messages.error(request,msg)
 
-        return render(request,'palsPage.html',{'Signed_in':True,'msg':msg,'success':success})
+        return render(request,'palsPage.html')
         
 
