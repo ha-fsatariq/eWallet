@@ -1,39 +1,41 @@
+
 {% extends "base.html" %}
 {% load static %}
-{% block title %}load Balance Page{% endblock %}
-{% comment %} {% block csshref %} href="{% static 'css/homepage.css' %}" {% endblock %} {% endcomment %}
+{% block title %}Add Pals Page{% endblock %}
 {% block navbar %}
 {% url 'logout' as custom_logout_url %}
-{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in %}
+{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in%}
 {% include 'Components/navbar.html' %}
 {% endwith %}
 {% endblock %}
 {% block content %}
-
-<div class="container mt-5">
+  <div class="container mt-5">
     
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="text-center">Load Amount</h4>
+                    <h4 class="text-center">Add Pal</h4>
                 </div>
                 <div class="card-body">
                    
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="username">User Name:</label>
-                            <input type="text" class="form-control" id="username" name="username"  required>
+                            <label for="nickname" class="form-label">Nickname</label>
+                            <input type="text" class="form-control" id="nickname" name='nickname' required>
                           </div>
                           <div class="form-group">
-                            <label for="amount">Amount:</label>
-                            <input type="number" class="form-control" id="amount" name="amount"  required>
+                            <label for="email" class="form-label">Email</label>
+                             <input type="email" class="form-control" id="email" name='email'>
                           </div>
-                      
+                          <div class="form-group">
+                            <label for="contact" class="form-label">Contact Number</label>
+                            <input type="text" class="form-control" id="contact" name='contact'>
+                          </div>
                 
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        
+                       
                       </form>
                    
                 </div>
@@ -41,5 +43,4 @@
         </div>
     </div>
 </div>
-  
 {% endblock %}
