@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Funds Transfer Page{% endblock %}
+{% block navbar %}
+{% url 'logout' as custom_logout_url %}
+{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in%}
+{% include 'Components/navbar.html' %}
+{% endwith %}
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if disclaimer and dis_type %}
+            <div class="alert alert-info">
+                {{ disclaimer }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% elif disclaimer %}
+            <div class="alert alert-danger">
+                {{ disclaimer }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Funds Transfer</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" >
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                             <input type="email" class="form-control" id="email" name='email' {% if recieved_email %} value="{{ recieved_email }}" readonly {% endif %}>
+                          </div>
+                        <div class="mb-3">
+                            <label for="contact" class="form-label">Contact</label>
+                            <input type="text" class="form-control" id="contact" name="contact" {% if received_contact %} value="{{ received_contact }}" readonly {% endif %} >
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="purpose" class="form-label">Purpose</label>
+                            <textarea class="form-control" id="purpose" name="purpose" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Transfer Funds</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

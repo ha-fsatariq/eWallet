@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Pals Page{% endblock %}
+{% block navbar %}
+{% url 'logout' as custom_logout_url %}
+{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in%}
+{% include 'Components/navbar.html' %}
+{% endwith %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    
+    <h3>Your Registered pals </h3>
+    
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nickname</th>
+                <th>Pay</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for friend, user in combined_data %}
+            <tr>
+                <td>{{ friend.nickname }}</td>
+                <td>
+                    <a href="{% url 'transferFund' %}?contact={{ user.contact }}&email={{ user.email }}" class="btn btn-primary">pay</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+  <a href="{% url 'AddPals' %}" class="btn btn-primary">Add Pals</a>
+{% endblock %}

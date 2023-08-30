@@ -1,15 +1,44 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Statement History Page{% endblock %}
-{% comment %} {% block csshref %} href="{% static 'css/homepage.css' %}" {% endblock %} {% endcomment %}
-{% block navbar %}
-{% url 'logout' as custom_logout_url %}
-{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in  %}
-{% include 'Components/navbar.html' %}
-{% endwith %}
-{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}Statement History
+Page{% endblock %} {% block navbar %} {% url 'logout' as custom_logout_url %} {%
+with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in
+%} {% include 'Components/navbar.html' %} {% endwith %} {% endblock %} {% block
+content %}
 
-Statement History
-  
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="text-center">Check Statment History</h4>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="username">Enter Contact number:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="contact"
+                name="contact"
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

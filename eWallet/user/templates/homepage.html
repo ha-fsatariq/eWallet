@@ -7,7 +7,7 @@
 {% block jshref %} src="{% static 'js/homepage.js' %}" {% endblock %}
 {% block navbar %}
 {% url 'logout' as custom_logout_url %}
-{% with Href=custom_logout_url log='logout' user=user Signed_in=Signed_in%}
+{% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in%}
 {% include 'Components/navbar.html' %}
 {% endwith %}
 {% endblock %}
@@ -20,13 +20,13 @@
             <div class="user-card p-4">
                 <div class="row">
                     <div class="col-md-4 text-center">
-                        <img src="{{ user.profileImage.url }}" alt="profileImage" class="img-fluid profile-image">
+                        <img src="{{ request.user.profileImage.url }}" alt="profileImage" class="img-fluid profile-image">
                         
                     </div>
                     <div class="col-md-8 user-info">
-                        <h2 class="mb-3">{{ user.username }}</h2>
-                        <h4>CNIC: {{ user.cnic }}</h4>
-                        <h4 id="amount" class="mb-0">Amount: {{ user.amount }} Rs</h4>
+                        <h2 class="mb-3">{{ request.user.username }}</h2>
+                        <h4>CNIC: {{ request.user.cnic }}</h4>
+                        <h4 id="amount" class="mb-0">Amount: {{ request.user.amount }} Rs</h4>
                 
                         <a class="btn btn-success btn-action">Hide Balance</a>
                     </div>
@@ -37,15 +37,15 @@
             <div class="row justify-content-center">
                 
 
-                {% with Heading='Transfer Funds' discription='Send the funds to your loved ones!Seamlessly Move Your Money: Transfer Funds with Confidence' button='Transfer Now' %}
+                {% with Heading='Transfer Funds' discription='Send the funds to your loved ones!Seamlessly Move Your Money: Transfer Funds with Confidence' button='Transfer Now' link='transferFund' %}
                 {% include 'Components/cards.html' %}
                 {% endwith %}
 
-                {% with Heading='Add Payee' discription='To send money without having the hastle to add information, add payee now.Hastel free banking!' button='Add Now' %}
+                {% with Heading='See Payee' discription='To send money without having the hastle to add information, add payee now.Hastel free banking!' button='See Pal' link='pals' %}
                 {% include 'Components/cards.html' %}
                 {% endwith %}
 
-                {% with Heading='Amount Statement' discription='Keep track of your account history and transaction details by accessing your account statement.' button='See Statement' %}
+                {% with Heading='Amount Statement' discription='Keep track of your account history and transaction details by accessing your account statement.' button='See Statement' link='accountStatement' %}
                 {% include 'Components/cards.html' %}
                 {% endwith %}
 
@@ -55,10 +55,4 @@
 </div>
 
 
-
-
-
-
-
-   
 {% endblock %}
