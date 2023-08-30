@@ -1,70 +1,111 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Register Page{% endblock %} {% block
+navbar %} {% with Href='#' log='' %} {% include 'Components/navbar.html' %} {%
+endwith %} {% endblock %} {% block content %}
 
-{% block title %}Register Page{% endblock %}
-{% block navbar %}
-{% with Href='#' log='' %}
-{% include 'Components/navbar.html' %}
-{% endwith %}
-{% endblock %}
-{% block content %}
-
-  <div class="container mt-5">
-    
-    <div class="row justify-content-center">
-    
-        <div class="col-md-6 mb-5">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="text-center">Register Here</h4>
-                </div>
-                <div class="card-body">
-                   
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                       
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName"   required>
-                          </div>
-                        <div class="form-group">
-                          <label for="email">Email address</label>
-                          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"  required>
-                        </div>
-                        <div class="form-group">
-                          <label for="password">Enter Password</label>
-                          <input type="password" class="form-control" id="password" name="password" minlength="6" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cnic">CNIC</label>
-                            <input type="text" class="form-control" id="cnic" name="cnic"  required>
-                          </div>
-                          <div class="form-group">
-                            <label for="contact">Contact</label>
-                            <input type="text" class="form-control" id="contact" name="contact"  required>
-                          </div>
-                          <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" name="address" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="profile">Upload Profile Picture</label>
-                            <input type="file" class="form-control-file" id="profile" name="profile"  required>
-                          </div>
-                          <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                      </form>
-                    
-                </div>
-                <div class="d-flex justify-content-center mb-3">
-                  Already have an account? <a href="{% url 'login' %}" class="ml-1">Login</a>
-              </div>
-            </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 mb-5">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="text-center">Register Here</h4>
         </div>
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstName"
+                name="firstName"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastName"
+                name="lastName"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                aria-describedby="emailHelp"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Enter Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                minlength="6"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="cnic">CNIC</label>
+              <input
+                type="text"
+                class="form-control"
+                id="cnic"
+                name="cnic"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="contact">Contact</label>
+              <input
+                type="text"
+                class="form-control"
+                id="contact"
+                name="contact"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                name="address"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="profile">Upload Profile Picture</label>
+              <input
+                type="file"
+                class="form-control-file"
+                id="profile"
+                name="profile"
+                required
+              />
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          Already have an account?
+          <a href="{% url 'login' %}" class="ml-1">Login</a>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
