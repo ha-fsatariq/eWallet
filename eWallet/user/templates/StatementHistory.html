@@ -1,8 +1,13 @@
-{% extends "base.html" %} {% load static %} {% block title %}Statement History
-Page{% endblock %} {% block navbar %} {% url 'logout' as custom_logout_url %} {%
-with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in
-%} {% include 'Components/navbar.html' %} {% endwith %} {% endblock %} {% block
-content %}
+{% extends "base.html" %}
+ {% load static %}
+  {% block title %}Statement History Page{% endblock %} 
+  {% block navbar %}
+   {% url 'logout' as custom_logout_url %} 
+   {% with Href=custom_logout_url log='logout' user=request.user Signed_in=Signed_in %} 
+   {% include 'Components/navbar.html' %} 
+   {% endwith %}
+    {% endblock %} 
+    {% block content %}
 
 <div class="container mt-5">
   <div class="row justify-content-center">

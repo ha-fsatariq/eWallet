@@ -29,8 +29,9 @@
     <script {% block jshref %} {% endblock %}></script>
   </head>
   <body>
-    {% block navbar %} {% include 'Components/navbar.html' with Href=Href
-    log=log %} {% endblock %}
+    {% block navbar %} 
+    {% include 'Components/navbar.html' with Href=Href log=log %}
+     {% endblock %}
 
     <div class="container mt-4">
       {% include 'Components/alerts.html'%}
