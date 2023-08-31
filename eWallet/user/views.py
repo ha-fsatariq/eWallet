@@ -55,7 +55,7 @@ class RegistrationView(View):
                 'activation_url': activation_url,
             })
 
-            send_mail(mail_subject, message, 'noreply@example.com', [email])
+            send_mail(mail_subject,'', 'noreply@example.com', [email],html_message=message)
             return redirect('login')
 
         else:
@@ -220,8 +220,7 @@ class profile(View):
             })
 
             logout(request)
-            send_mail(mail_subject, message,
-                      'noreply@example.com', [new_email])
+            send_mail(mail_subject,'', 'noreply@example.com', [new_email],html_message=message)
             return redirect('login')
 
         else:
@@ -258,8 +257,7 @@ class ForgotPassword(View):
                     'token': token,
                     'activation_url': activation_url,
                 })
-                send_mail(mail_subject, message,
-                          'noreply@example.com', [email])
+                send_mail(mail_subject,'', 'noreply@example.com', [email],html_message=message)
                 return redirect('login')
             else:
                 messages.error(
