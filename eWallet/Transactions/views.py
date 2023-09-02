@@ -31,23 +31,26 @@ class fundsTransfer(View):
             user_transactions = Transaction.objects.filter(user=request.user, timestamp__date=today ,transaction_type='debit')
             amount_transferred_today = sum(transaction.amount for transaction in user_transactions)
             #updating the amount only if the transfaction limit for today has been achieved
-            if (amount_transferred_today>=25000):
+            if ((amount_transferred_today>=25000) or (amount>=25000)):
                 senderBalance=sender_credit-amount-200
                 checkamount=amount+200
+                
             else:
                 senderBalance=sender_credit-amount
                 checkamount=amount
 
             
-            if (sender_credit >= checkamount):
+            if (sender_credit >= checkamount ):
                 transaction_reciever=User.objects.get(Q(contact=contact_recieved)|Q(email=email_recieved))
-                
+                if(checkamount != amount):
+                    Transaction.objects.create(user=transaction_sender,transaction_type='debit',otheruser=transaction_reciever.username,amount=200,purpose='Tax deduction-Limit reached')
                 #Sender being entered:
                 Transaction.objects.create(user=transaction_sender,transaction_type='debit',otheruser=transaction_reciever.username,amount=float(amount),purpose=purpose)
                 #updating the sender user object:
                 transaction_sender.amount=str(senderBalance)
                 transaction_sender.save()
                 #Receiver bring entered:
+                transaction_reciever=User.objects.get(Q(contact=contact_recieved)|Q(email=email_recieved))
                 Transaction.objects.create(user=transaction_reciever,transaction_type='credit',otheruser=transaction_sender.username ,amount=float(amount),purpose=purpose)
                 #updating the reciever user object:
                 transaction_reciever.amount=str(float(transaction_reciever.amount)+amount)
